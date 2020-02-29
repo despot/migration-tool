@@ -32,8 +32,8 @@ public class CountryServiceImplUnitTest {
     public void getAllCountriesTest()
     {
         List<Country> list = Arrays.asList(
-                new Country(1L,"Chad",BigDecimal.valueOf(1.23)),
-                new Country(2L,"France", BigDecimal.valueOf(4.56)));
+                new Country(1L,"Chad",BigDecimal.valueOf(1.23), null),
+                new Country(2L,"France", BigDecimal.valueOf(4.56), null));
 
         when(countryRepository.findAll()).thenReturn(list);
 

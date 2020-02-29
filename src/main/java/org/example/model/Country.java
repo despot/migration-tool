@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,25 +12,38 @@ import java.math.BigDecimal;
  * @author Despot Jakimovski
  */
 @Entity
-@Table(name = "T_COUNTRY")
+@Table(name = "country")
 public class Country implements Serializable {
 
     private static final long  serialVersionUID = 1L;
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(//to handle hibernate+mysql sequence issue.
+            name = "native",
+            strategy = "native"
+    )
     protected Long id;
 
     @Column(nullable = false)
     protected String name;
 
+    @Column(name = "educationRankingsByPopulation")
+    protected BigDecimal educationRankingsByPopulation;
+
+    @Transient
     protected BigDecimal oneTenIndex;
 
     public Country() {
     }
 
-    public Country(Long id, String name, BigDecimal oneTenIndex) {
+    public Country(Long id, String name, BigDecimal educationRankingsByPopulation, BigDecimal oneTenIndex) {
         this.id = id;
         this.name = name;
+        this.educationRankingsByPopulation = educationRankingsByPopulation;
         this.oneTenIndex = oneTenIndex;
     }
 
@@ -56,6 +71,14 @@ public class Country implements Serializable {
         this.oneTenIndex = oneTenIndex;
     }
 
+    public BigDecimal getEducationRankingsByPopulation() {
+        return educationRankingsByPopulation;
+    }
+
+    public void setEducationRankingsByPopulation(BigDecimal educationRankingsByPopulation) {
+        this.educationRankingsByPopulation = educationRankingsByPopulation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,15 +86,18 @@ public class Country implements Serializable {
 
         Country country = (Country) o;
 
-        if (!id.equals(country.id)) return false;
-        if (!name.equals(country.name)) return false;
+        if (id != null ? !id.equals(country.id) : country.id != null) return false;
+        if (name != null ? !name.equals(country.name) : country.name != null) return false;
+        if (educationRankingsByPopulation != null ? !educationRankingsByPopulation.equals(country.educationRankingsByPopulation) : country.educationRankingsByPopulation != null)
+            return false;
         return oneTenIndex != null ? oneTenIndex.equals(country.oneTenIndex) : country.oneTenIndex == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (educationRankingsByPopulation != null ? educationRankingsByPopulation.hashCode() : 0);
         result = 31 * result + (oneTenIndex != null ? oneTenIndex.hashCode() : 0);
         return result;
     }
