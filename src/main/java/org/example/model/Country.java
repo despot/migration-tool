@@ -26,7 +26,8 @@ public class Country implements Serializable {
     public Country() {
     }
 
-    public Country(String name, BigDecimal oneTenIndex) {
+    public Country(Long id, String name, BigDecimal oneTenIndex) {
+        this.id = id;
         this.name = name;
         this.oneTenIndex = oneTenIndex;
     }

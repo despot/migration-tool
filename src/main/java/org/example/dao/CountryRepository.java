@@ -9,5 +9,4 @@ import org.springframework.data.repository.CrudRepository;
  * @author Despot Jakimovski
  */
 public interface CountryRepository extends CrudRepository<Country,Long> {
-    
 }
