@@ -101,4 +101,51 @@ public class Country implements Serializable {
         result = 31 * result + (oneTenIndex != null ? oneTenIndex.hashCode() : 0);
         return result;
     }
+
+    public static final class CountryBuilder {
+        protected Long id;
+        protected String name;
+        protected BigDecimal educationRankingsByPopulation;
+        protected BigDecimal oneTenIndex;
+
+        private CountryBuilder() {
+        }
+
+        public static CountryBuilder aCountry() {
+            return new CountryBuilder();
+        }
+
+        public CountryBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CountryBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CountryBuilder withEducationRankingsByPopulation(BigDecimal educationRankingsByPopulation) {
+            this.educationRankingsByPopulation = educationRankingsByPopulation;
+            return this;
+        }
+
+        public CountryBuilder withOneTenIndex(BigDecimal oneTenIndex) {
+            this.oneTenIndex = oneTenIndex;
+            return this;
+        }
+
+        public CountryBuilder but() {
+            return aCountry().withId(id).withName(name).withEducationRankingsByPopulation(educationRankingsByPopulation).withOneTenIndex(oneTenIndex);
+        }
+
+        public Country build() {
+            Country country = new Country();
+            country.setId(id);
+            country.setName(name);
+            country.setEducationRankingsByPopulation(educationRankingsByPopulation);
+            country.setOneTenIndex(oneTenIndex);
+            return country;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package org.example.application.config;
+package org.example.server.country.config;
 
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.MysqldConfig;
@@ -29,24 +29,29 @@ import static java.lang.String.format;
  * @author Despot
  */
 @Configuration
-@ComponentScan({"org.example.service"})
-@EntityScan({"org.example.model", "org.example.service"})
+@ComponentScan({"org.example.service", "org.example.controller"})
+@EntityScan({"org.example.model"})
 @EnableJpaRepositories("org.example.dao")
 @PropertySource("classpath:db-config.properties")
 public class CountryConfiguration {
 
-    protected Logger logger;
+    protected static Logger logger;
 
+//    @Autowired //TODO: Error creating bean with name 'org.springframework.cloud.autoconfigure.RefreshAutoConfiguration$JpaInvokerConfiguration': Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'countryConfiguration': Unsatisfied dependency expressed through field 'embeddedMysql'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddedMysql' defined in org.example.server.country.config.CountryConfiguration: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.wix.mysql.EmbeddedMysql]: Circular reference involving containing bean 'countryConfiguration' - consider declaring the factory method as static for independence from its containing instance. Factory method 'embeddedMysql' threw exception; nested exception is java.lang.RuntimeException: java.io.IOException: java.lang.RuntimeException: mysql start failed with error: [ERROR] Can't start server: Bind on TCP/IP port: No such file or directory
+//    private EmbeddedMysql embeddedMysql;
     public static EmbeddedMysql embeddedMysql;
 
     public CountryConfiguration() {
         logger = Logger.getLogger(getClass().getName());
+//        embeddedMysql = embeddedMysql();
     }
 
     /**
      * Creates an in-memory "rewards" database populated with test data for fast testing
      */
     @Bean
+//    @Autowired
+//    public DataSource dataSource(EmbeddedMysql embeddedMysql) throws ClassNotFoundException {
     public DataSource dataSource() throws ClassNotFoundException {
         logger.info("dataSource() invoked");
 
@@ -56,8 +61,7 @@ public class CountryConfiguration {
 //                .build();
 
         DataSource dataSource = createDataSource();
-
-                logger.info("dataSource = " + dataSource);
+        logger.info("dataSource = " + dataSource);
 
         // Sanity check
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -67,9 +71,10 @@ public class CountryConfiguration {
         return dataSource;
     }
 
-    public DataSource createDataSource() throws ClassNotFoundException {
-//        final EmbeddedMysql embeddedMysql = _setupBeforeClass(); // make sure embeddedMySql is started.
-        _setupBeforeClass(); // make sure embeddedMySql is started.
+//    private DataSource createDataSource(EmbeddedMysql embeddedMysql) throws ClassNotFoundException {
+    private DataSource createDataSource() throws ClassNotFoundException {
+        embeddedMysql(); // make sure embeddedMySql is started.
+
 
 //        Map<String, String> params = new HashMap<>();
 //        params.put("profileSQL", String.valueOf(false));
@@ -98,7 +103,11 @@ public class CountryConfiguration {
                 .build();
     }
 
-    public static void _setupBeforeClass() {
+    //TODO: create a TestSuite for all IT that use the Configuration class and _tearDownAfterClass the embeddedMysql there. Tried tearing down with @Bean (destroyMethod = stop) in Configuration class, but no success.
+//    @Bean(destroyMethod = "stop")
+//    @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+//    public EmbeddedMysql embeddedMysql() {
+    public static void embeddedMysql() {
         MysqldConfig config = MysqldConfig.aMysqldConfig(v5_7_19)
                 .withPort(3307)
                 .withTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")))
@@ -110,10 +119,36 @@ public class CountryConfiguration {
                 .withScripts(classPathScript("sql/DMLTest.sql"))
                 .build();
 
+//        EmbeddedMysql embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
         embeddedMysql = EmbeddedMysql.anEmbeddedMysql(config)
                 .addSchema(schemaConfig)
                 .start();
+
+        logger.info("embeddedMysql = " + embeddedMysql);
+
+//        return embeddedMysql;
     }
 
-    //TODO: think about adding CountryServiceImplIT._tearDownAfterClass() method in CountryConfiguration through a method after destruction or similar, as you need to kill the embeddedMysql from there.
+//    @PreDestroy
+////    @Autowired
+////    public void _tearDownEmbeddedMysql(EmbeddedMysql embeddedMysql) {
+//    public void _tearDownEmbeddedMysql() {
+//        logger.info("PreDestroy _tearDownEmbeddedMysql invoked!");
+//        EmbeddedMysql embeddedMysql = embeddedMysql(); //TODO: Destroy method on bean with name 'countryConfiguration' threw an exception: org.springframework.beans.factory.BeanCreationNotAllowedException: Error creating bean with name 'embeddedMysql': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
+//
+//        if (null != embeddedMysql) {
+//            embeddedMysql.stop();
+//            logger.info("embeddedMysql stopped from PreDestroy _tearDownEmbeddedMysql invoked!");
+//        }
+//    }
+
+//    @PreDestroy
+//    public void _tearDownEmbeddedMysql() {
+//        logger.info("PreDestroy _tearDownEmbeddedMysql invoked!");
+//        if (null != embeddedMysql) {
+//            embeddedMysql.stop();
+//            logger.info("embeddedMysql stopped from PreDestroy _tearDownEmbeddedMysql invoked!");
+//        }
+//    }
+
 }

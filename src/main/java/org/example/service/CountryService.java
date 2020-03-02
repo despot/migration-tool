@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CountryService {
     List<Country> getAllCountries();
+//    void generateOneTenIndex(List<Country> countries);
 }
