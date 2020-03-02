@@ -40,27 +40,10 @@ public class CountryControllerRestServerlessIT {
         ;
     }
 
-    //TODO: create a TestSuite for all IT that use the Configuration class and _tearDownAfterClass the embeddedMysql. Tried tearing down with @Bean (destroyMethod = stop) in Configuration class, but no success.
-//    @Autowired
-//    private static EmbeddedMysql embeddedMysql;
-//    @AfterClass
-//    public static void _tearDownAfterClass() {//TODO: it is not wiring the static embeddedMysql
-//        if (null != embeddedMysql) {
-//            embeddedMysql.stop();
-//        }
-//    }
-
     @AfterClass
     public static void _tearDownAfterClass() {
         if (null != embeddedMysql) {
             embeddedMysql.stop();
         }
     }
-//    @AfterClass
-//    @Autowired
-//    public static void _tearDownAfterClass(EmbeddedMysql embeddedMysql) {//TODO: java.lang.Exception: Method _tearDownAfterClass should have no parameters
-//        if (null != embeddedMysql) {
-//            embeddedMysql.stop();
-//        }
-//    }
 }
