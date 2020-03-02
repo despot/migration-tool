@@ -1,6 +1,6 @@
-package org.example.application;
+package org.example.server.country;
 
-import org.example.application.config.CountryConfiguration;
+import org.example.server.country.config.CountryConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -22,9 +22,9 @@ import java.util.logging.Logger;
 @SpringBootApplication
 @EnableDiscoveryClient
 @Import(CountryConfiguration.class)
-public class CountryApplication {
+public class CountryServer {
 
-    protected Logger logger = Logger.getLogger(CountryApplication.class.getName());
+    protected Logger logger = Logger.getLogger(CountryServer.class.getName());
 
     /**
      * Run the application using Spring Boot and an embedded servlet engine.
@@ -35,6 +35,6 @@ public class CountryApplication {
         // Tell server to look for country-server.properties or country-server.yml
         System.setProperty("spring.config.name", "country-server");
 
-        SpringApplication.run(CountryApplication.class, args);
+        SpringApplication.run(CountryServer.class, args);
     }
 }
