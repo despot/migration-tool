@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.Country;
 import org.example.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class CountryController {
         this.countryService = countryService;
     }
 
+    @CrossOrigin
     @GetMapping(path = "/getAll")
     public List<Country> getAll() {
         logger.info("Country-service getAll invoked");
