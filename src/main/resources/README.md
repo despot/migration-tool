@@ -8,3 +8,6 @@ You can run the system in your IDE by running the three server classes in order:
 
 As discussed in the Blog, open the Eureka dashboard [http://localhost:1111](http://localhost:1111) in your browser to see that the `COUNTRY-SERVICE` applications have registered. Next you can open [/countries/getAll](http://localhost:2222/countries/getAll) to get a response list of countries.
 
+## Using Docker
+
+This application can also be run using 2 docker containers. See [here](use-docker.md).

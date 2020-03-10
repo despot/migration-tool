@@ -12,12 +12,13 @@ See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${PID}: %-5level %logger{0} - %msg%n</pattern>
+            <pattern>%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} ${PID}: %-5level %logger{0} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <!-- Specify logging levels -->
     <logger name="org.springframework" level="warn"/>
+<!--    <logger name="org.springframework" level="debug"/>-->
  	<logger name="org.hibernate" level="warn"/>
          
     <root level="info">

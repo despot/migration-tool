@@ -11,7 +11,7 @@
 
     <properties>
         <!-- Stand-alone RESTFul application for testing only -->
-        <start-class>io.pivotal.microservices.services.Main</start-class>
+        <start-class>org.example.server.main.Main</start-class>
     </properties>
 
     <parent>

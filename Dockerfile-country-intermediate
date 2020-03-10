@@ -1,0 +1,19 @@
+FROM openjdk:11-jre
+#FROM openjdk:latest
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND teletype
+
+# install system-wide deps for embedded mysql
+#RUN yum install libaio1
+RUN apt-get update
+
+RUN apt-get install -y apt-utils
+
+RUN apt-get install libaio1
+RUN apt-get install libnuma1
+#RUN apt-get install ncurses5-compat-lib
+#RUN apt-get install -y libncurses5-dev
+#RUN apt-get install -y libncursesw5-dev
+RUN apt-get install -y libncurses5-dev libncursesw5-dev
+
