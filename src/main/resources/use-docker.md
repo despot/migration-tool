@@ -35,12 +35,7 @@ We are going to run the Migration Tool Microservice application available at htt
     ```sh
     docker build -t despotjakimovski/migration-tool .
     ```
-   
-   As embedded mysql needs libaio.so.1 library to run on the linux machine, we need to create another image with that library.
-   ```sh
-   docker build -f Dockerfile-country -t despotjakimovski/migration-tool-country .
-   ```
-   
+      
 1. Check it worked. You should see `despotjakimovski/migration-tool` listed.
 
     ```sh
@@ -53,7 +48,7 @@ We will run the container 2 times, each time running the Java application in a d
 
 TBD: an example diagram of the microservices communication. 
 
-1. They need to talk to each other, so let's give them a network:
+1. They need to talk to each other, so let's give them a network ('docker network ls' to check for available networks):
 
     ```sh
     docker network create mt-net
@@ -74,12 +69,7 @@ TBD: an example diagram of the microservices communication.
 1. _In a new CMD/Terminal window_, run a second container for the country microservice. This holds a database of couple of available countries (stored using an embedded MySQL database)
 
     ```sh
-    docker run --name country --hostname country --network mt-net -p 2222:2222 --rm despotjakimovski/migration-tool-country java -jar app.jar country  --registration.server.hostname=<reg server ip addr>
-    ```
-
-    OLD:
-    ```sh
-    docker run --name country --hostname country --network mt-net -p 2222:2222 despotjakimovski/migration-tool java -jar app.jar country  --registration.server.hostname=<reg server ip addr>
+    docker run --name country --hostname country --network mt-net -p 2222:2222 --rm despotjakimovski/migration-tool java -jar app.jar country  --registration.server.hostname=<reg server ip addr>
     ```
 
     Replace `<eg server ip addr>` with the IP address you determined earlier. Or to find the reg server ip, you can do: 
@@ -90,4 +80,4 @@ TBD: an example diagram of the microservices communication.
 
 1. Return to the Eureka Dashboard in your browser and refresh the screen.  You should see that `COUNTRY-SERVICE` is now registered.
 
-1. In a second browser tab, go to http://localhost:2222.  This is the web interface you just deployed and you should be able to view, list and search for account information.
+1. In a second browser tab, go to http://192.168.99.100:2222/countries/getAll.  This is the web interface you just deployed and you should be able to view the countries information.

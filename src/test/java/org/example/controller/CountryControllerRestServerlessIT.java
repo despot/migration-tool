@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.server.country.config.CountryConfiguration;
-import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.example.server.country.config.CountryConfiguration.embeddedMysql;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,12 +36,5 @@ public class CountryControllerRestServerlessIT {
                 .andExpect(jsonPath("$[*].name").value(
                         containsInAnyOrder("Sweden", "Brazil", "Macedonia", "Germany")))
         ;
-    }
-
-    @AfterClass
-    public static void _tearDownAfterClass() {
-        if (null != embeddedMysql) {
-            embeddedMysql.stop();
-        }
     }
 }
