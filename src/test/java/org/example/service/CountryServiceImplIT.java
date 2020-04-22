@@ -25,7 +25,7 @@ public class CountryServiceImplIT {
     public void getAllCountriesTest() {
         List<Country> countryListActual = countryService.getAllCountries();
         assertThat(countryListActual).isNotNull().isNotEmpty();
-        assertThat(countryListActual.size()).isEqualTo(4);
+        assertThat(countryListActual.size()).isEqualTo(17);
     }
 
 }

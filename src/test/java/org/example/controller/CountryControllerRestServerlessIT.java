@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * An integration test for the CountryController class.
  *
- * Use WebTestClient instead of MockMvc if you want to handle reactive streams (non-blocking approach).
+ * Use WebTestClient instead of MockMvc if you want to handle reactive streams (non-blocking approach). Check images here: https://howtodoinjava.com/spring-webflux/spring-webflux-tutorial/
  * Use RestTemplate over MockMvc when you have a deployed running server that listens to http requests. MockMvc is setting up a whole web application context (fake DispatcherServlet).
  *
  */
@@ -34,7 +34,7 @@ public class CountryControllerRestServerlessIT {
     public void testCreateRetrieveWithMockMVC() throws Exception {
         this.mockMvc.perform(get("/countries/getAll"))
                 .andExpect(jsonPath("$[*].name").value(
-                        containsInAnyOrder("Sweden", "Brazil", "Macedonia", "Germany")))
+                        containsInAnyOrder("Sweden","Brazil","Macedonia","Germany","Netherlands","Portugal","Spain","Canada","United Kingdom","United States","Australia","France","Austria","Italy","Switzerland","Malta","Ireland")))
         ;
     }
 }
