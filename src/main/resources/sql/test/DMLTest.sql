@@ -1,3 +1,4 @@
+-- To build the insert into statement, check https://docs.google.com/spreadsheets/d/1oh27c8lrV_DUp75bUxT1Lsf9JS2BTNOeNotGs-0760A/edit#gid=0
 INSERT INTO country (name, parentalLeave, kindergardenPrices, internationalSchoolPrices, educationRankingsByPopulation,	averageHighestAndLowestTemperatureDifference, averageYearlySunshineHours, hoursReturnTravelFromOriginToDestination,	hoursReturnTravelFromOriginToDestination2, 	priceEurOfTravelReturnFromOriginToDestination, priceEurOfTravelReturnFromOriginToDestination2)
 VALUES
 ('Sweden',46.19636364,814.01625,5013.64375,1486,27.2,1814,42.5,10,947,170),

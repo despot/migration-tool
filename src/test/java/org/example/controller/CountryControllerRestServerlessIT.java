@@ -30,6 +30,9 @@ public class CountryControllerRestServerlessIT {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * To build the outcome of the test (in case you add other countries), build it automatically by using https://docs.google.com/spreadsheets/d/1oh27c8lrV_DUp75bUxT1Lsf9JS2BTNOeNotGs-0760A/edit#gid=0
+     */
     @Test
     public void testCreateRetrieveWithMockMVC() throws Exception {
         this.mockMvc.perform(get("/countries/getAll"))
